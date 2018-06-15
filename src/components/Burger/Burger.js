@@ -4,15 +4,20 @@ import BurguerIngredient from "./BurgerIngredient/BurgerIngredient";
 
 const burger = props => {
   // === Instructor Method ===
-  // const transformIngredients = Object.keys(props.ingredients)
+  // let transformIngredients = Object.keys(props.ingredients)
   //   .map(igKey => {
   //     return [...Array(props.ingredients[igKey])].map((_, i) => {
-  //       return <BurguerIngredient key={igKey + i} type={igKey} />
-  //     })
-  //   });
+  //       return <BurguerIngredient key={igKey + i} type={igKey} />;
+  //     });
+  //   })
+  //   .reduce((arr, el) => arr.concat(el), []);
+  
+  // if (transformIngredients.length === 0) {
+  //   transformIngredients = <p>Please start add ingredients</p>;
+  // }
 
   // === Personnal Method ===
-  const transformIngredients = Object.entries(props.ingredients)
+  let transformIngredients = Object.entries(props.ingredients)
     .map(ingredient => {
       const igName = ingredient[0];
       const igQuantity = ingredient[1];
@@ -24,8 +29,14 @@ const burger = props => {
       };
 
       return ingredients(igQuantity);
-    }
-  );
+    })
+    .reduce((arr, el) => arr.concat(el), []);
+
+  if (transformIngredients.length === 0) {
+    transformIngredients = <p>Please start add ingredients</p>
+  }
+
+  console.log(transformIngredients);
 
   return (
     <div className={classes.Burger}>
