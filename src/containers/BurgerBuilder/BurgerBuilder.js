@@ -20,11 +20,7 @@ class BurguerBuilder extends Component {
     totalPrice: 4
   };
 
-  addIngredientHandler = (type) => {
-    console.log(type);
-    console.log(this.state.ingredients);
-    console.log(this.state.ingredients[type]);
-    
+  addIngredientHandler = type => {
     const oldCount = this.state.ingredients[type];
     const updatedCount = oldCount + 1;
     const updatedIngredients = { ...this.state.ingredients };
@@ -36,17 +32,38 @@ class BurguerBuilder extends Component {
       ingredients: updatedIngredients,
       totalPrice: newPrice
     });
-  }
+  };
 
-  removeIngredientHandler = (type) => {}
+  removeIngredientHandler = type => {
+    const oldCount = this.state.ingredients[type];
+    if (oldCount <= 0) return;
+    const updatedCount = oldCount - 1;
+    const updatedIngredients = { ...this.state.ingredients };
+    updatedIngredients[type] = updatedCount;
+    const priceDeduction = INGREDIENT_PRICES[type];
+    const oldPrice = this.state.totalPrice;
+    const newPrice = oldPrice - priceDeduction;
+    this.setState({
+      ingredients: updatedIngredients,
+      totalPrice: newPrice
+    });
+  };
 
   render() {
+    const disableInfo = {
+      ...this.state.ingredients
+    }
+    for (let key in disableInfo) {
+      disableInfo[key] = disableInfo[key] <= 0;
+    }
+
     return (
       <React.Fragment>
         <Burger ingredients={this.state.ingredients} />
         <BuildControls
           ingredientsAdded={this.addIngredientHandler}
           ingredientRemoved={this.removeIngredientHandler}
+          disabled={disableInfo}
         />
       </React.Fragment>
     );

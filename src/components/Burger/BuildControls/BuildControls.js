@@ -14,10 +14,12 @@ const BuildControls = props => (
     {controls.map(e => (
       <BuildControl
         added={() => props.ingredientsAdded(e.type)}
+        removed={() => props.ingredientRemoved(e.type)}
+        disabled={props.disabled[e.type]}
         key={e.label}
         label={e.label}
       />
     ))}
   </div>
-);
+); 
 export default BuildControls;
