@@ -5,8 +5,8 @@ import BuildControls from "../../components/Burger/BuildControls/BuildControls";
 const INGREDIENT_PRICES = {
   salad: 0.5,
   cheese: 1,
-  meat: 2,
-  bacon: 1.5
+  meat: 1.07,
+  bacon: 1.32
 };
 
 class BurguerBuilder extends Component {
@@ -64,6 +64,7 @@ class BurguerBuilder extends Component {
           ingredientsAdded={this.addIngredientHandler}
           ingredientRemoved={this.removeIngredientHandler}
           disabled={disableInfo}
+          price={this.state.totalPrice}
         />
       </React.Fragment>
     );
