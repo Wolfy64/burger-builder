@@ -75,7 +75,6 @@ class BurguerBuilder extends Component {
   };
 
   purchaseCancelHandler = () => {
-    console.log("HELLO");
     this.setState({ purchasing: false });
   };
 
