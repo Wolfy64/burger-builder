@@ -21,7 +21,7 @@ const orderSummary = props => {
   return (
     <React.Fragment>
       <h3>Your Order</h3>
-      <p>A delicious burger with the fallowing ingredients:</p>
+      <p>A delicious burger with the following ingredients:</p>
       <ul>{ingredientSummary}</ul>
       <p><strong>Total Price: {props.price}</strong></p>
       <p>Continue to Checkout?</p>
