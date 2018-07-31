@@ -112,7 +112,28 @@ class BurguerBuilder extends Component {
     //   .catch(error => {
     //     this.setState({ loading: false, purchasing: false });
     //   });
-    this.props.history.push('/checkout');
+    const queryParams = [];
+
+    // Instructor method
+    // for (let i in this.state.ingredients) {
+    //   queryParams.push(
+    //     encodeURIComponent(i) +
+    //       '=' +
+    //       encodeURIComponent(this.state.ingredients[i])
+    //   );
+    // }
+
+    // Personnal method
+    Object.entries(this.state.ingredients).map(igd =>
+      queryParams.push(
+        `${encodeURIComponent(igd[0])}=${encodeURIComponent(igd[1])}`
+      )
+    );
+    const queryString = queryParams.join('&');
+    this.props.history.push({
+      pathname: '/checkout',
+      search: '?' + queryString
+    });
   };
 
   render() {
