@@ -19,8 +19,8 @@ class ContactData extends Component {
     event.preventDefault();
     this.setState({ loading: true });
     const order = {
-      ingredients: this.state.ingredients,
-      totalPrice: this.state.totalPrice,
+      ingredients: this.props.ingredients,
+      price: this.props.price,
       customer: {
         name: 'David Wolf',
         address: {
@@ -28,9 +28,9 @@ class ContactData extends Component {
           zipCode: '42999',
           country: 'USA'
         },
-        email: 'test@mail.com',
-        deliveryMode: 'fastest'
-      }
+        email: 'test@mail.com'
+      },
+      deliveryMode: 'fastest'
     };
     axios
       .post('orders.json', order)
@@ -61,14 +61,12 @@ class ContactData extends Component {
         />
         <input
           className={classes.Input}
-          I
           type="text"
           name="street"
           placeholder="Your Street"
         />
         <input
           className={classes.Input}
-          I
           type="text"
           name="postal"
           placeholder="Postal Code"

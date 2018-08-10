@@ -99,6 +99,7 @@ class BurguerBuilder extends Component {
     //       encodeURIComponent(this.state.ingredients[i])
     //   );
     // }
+    // queryParams.push('price=' + this.state.totalPrice);
 
     // Personnal method
     Object.entries(this.state.ingredients).map(igd =>
@@ -106,6 +107,7 @@ class BurguerBuilder extends Component {
         `${encodeURIComponent(igd[0])}=${encodeURIComponent(igd[1])}`
       )
     );
+    queryParams.push(`price=${this.state.totalPrice}`);
     const queryString = queryParams.join('&');
     this.props.history.push({
       pathname: '/checkout',
