@@ -1,5 +1,5 @@
-import React from "react";
-import Button from "../../UI/Modal/Button/Button";
+import React from 'react';
+import Button from '../../UI/Button/Button';
 
 const orderSummary = props => {
   // Instructor Method
@@ -14,7 +14,7 @@ const orderSummary = props => {
     .filter(e => e[1] > 0)
     .map(e => (
       <li key={e[0]}>
-        <span style={{ textTransform: "capitalize" }}>{e[0]}</span>: {e[1]}
+        <span style={{ textTransform: 'capitalize' }}>{e[0]}</span>: {e[1]}
       </li>
     ));
 
@@ -23,7 +23,9 @@ const orderSummary = props => {
       <h3>Your Order</h3>
       <p>A delicious burger with the following ingredients:</p>
       <ul>{ingredientSummary}</ul>
-      <p><strong>Total Price: {props.price}</strong></p>
+      <p>
+        <strong>Total Price: {props.price}</strong>
+      </p>
       <p>Continue to Checkout?</p>
       <Button btnType="Danger" clicked={props.purchaseCancelled}>
         CANCEL
