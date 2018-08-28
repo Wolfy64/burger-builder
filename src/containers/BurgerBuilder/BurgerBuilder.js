@@ -11,7 +11,6 @@ import withErrorHandler from '../../components/withErrorHandler/withErrorHandler
 
 class BurguerBuilder extends Component {
   state = {
-    purchasable: false,
     purchasing: false,
     loading: false,
     error: false
@@ -26,18 +25,13 @@ class BurguerBuilder extends Component {
     //   });
   }
 
-  updatePuchaseState = ingredients => {
-    const sum = Object.values(ingredients).find(e => e > 0);
-    this.setState({ purchasable: sum > 0 });
-  };
+  // Check if ingredients then return bool
+  updatePuchaseState = ingredients =>
+    Object.values(ingredients).find(e => e > 0);
 
-  purchaseHandler = () => {
-    this.setState({ purchasing: true });
-  };
+  purchaseHandler = () => this.setState({ purchasing: true });
 
-  purchaseCancelHandler = () => {
-    this.setState({ purchasing: false });
-  };
+  purchaseCancelHandler = () => this.setState({ purchasing: false });
 
   purchaseContinueHandler = () => {
     const queryParams = [];
@@ -78,7 +72,7 @@ class BurguerBuilder extends Component {
             ingredientsAdded={this.props.onIngredientAdded}
             ingredientRemoved={this.props.onIngredientRemoved}
             disabled={disableInfo}
-            purchasable={this.state.purchasable}
+            purchasable={this.updatePuchaseState(this.props.ings)}
             ordered={this.purchaseHandler}
             price={this.props.price}
           />
@@ -95,9 +89,7 @@ class BurguerBuilder extends Component {
       );
     }
 
-    if (this.state.loading) {
-      orderSummary = <Spinner />;
-    }
+    if (this.state.loading) orderSummary = <Spinner />;
 
     return (
       <React.Fragment>
