@@ -9,16 +9,8 @@ import axios from '../../axios-orders';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from '../../components/withErrorHandler/withErrorHandler';
 
-const INGREDIENT_PRICES = {
-  salad: 0.5,
-  cheese: 1,
-  meat: 1.07,
-  bacon: 1.32
-};
-
 class BurguerBuilder extends Component {
   state = {
-    totalPrice: 4,
     purchasable: false,
     purchasing: false,
     loading: false,
@@ -35,49 +27,8 @@ class BurguerBuilder extends Component {
   }
 
   updatePuchaseState = ingredients => {
-    // Intructor Method
-    // const sum = Object.keys(ingredients)
-    //   .map(igKey => {
-    //     return ingredients[igKey];
-    //   })
-    //   .reduce((sum, el) => {
-    //     return sum + el;
-    //   }, 0);
-
-    // Personnal Method
     const sum = Object.values(ingredients).find(e => e > 0);
     this.setState({ purchasable: sum > 0 });
-  };
-
-  addIngredientHandler = type => {
-    const oldCount = this.state.ingredients[type];
-    const updatedCount = oldCount + 1;
-    const updatedIngredients = { ...this.state.ingredients };
-    updatedIngredients[type] = updatedCount;
-    const priceAddition = INGREDIENT_PRICES[type];
-    const oldPrice = this.state.totalPrice;
-    const newPrice = oldPrice + priceAddition;
-    this.setState({
-      ingredients: updatedIngredients,
-      totalPrice: newPrice
-    });
-    this.updatePuchaseState(updatedIngredients);
-  };
-
-  removeIngredientHandler = type => {
-    const oldCount = this.state.ingredients[type];
-    if (oldCount <= 0) return;
-    const updatedCount = oldCount - 1;
-    const updatedIngredients = { ...this.state.ingredients };
-    updatedIngredients[type] = updatedCount;
-    const priceDeduction = INGREDIENT_PRICES[type];
-    const oldPrice = this.state.totalPrice;
-    const newPrice = oldPrice - priceDeduction;
-    this.setState({
-      ingredients: updatedIngredients,
-      totalPrice: newPrice
-    });
-    this.updatePuchaseState(updatedIngredients);
   };
 
   purchaseHandler = () => {
@@ -89,26 +40,13 @@ class BurguerBuilder extends Component {
   };
 
   purchaseContinueHandler = () => {
-    // alert('You continue!');
     const queryParams = [];
-
-    // Instructor method
-    // for (let i in this.state.ingredients) {
-    //   queryParams.push(
-    //     encodeURIComponent(i) +
-    //       '=' +
-    //       encodeURIComponent(this.state.ingredients[i])
-    //   );
-    // }
-    // queryParams.push('price=' + this.state.totalPrice);
-
-    // Personnal method
     Object.entries(this.state.ingredients).map(igd =>
       queryParams.push(
         `${encodeURIComponent(igd[0])}=${encodeURIComponent(igd[1])}`
       )
     );
-    queryParams.push(`price=${this.state.totalPrice}`);
+    queryParams.push(`price=${this.props.price}`);
     const queryString = queryParams.join('&');
     this.props.history.push({
       pathname: '/checkout',
@@ -142,7 +80,7 @@ class BurguerBuilder extends Component {
             disabled={disableInfo}
             purchasable={this.state.purchasable}
             ordered={this.purchaseHandler}
-            price={this.state.totalPrice}
+            price={this.props.price}
           />
         </React.Fragment>
       );
@@ -152,7 +90,7 @@ class BurguerBuilder extends Component {
           ingredients={this.props.ings}
           purchaseCancelled={this.purchaseCancelHandler}
           purchaseContinued={this.purchaseContinueHandler}
-          price={this.state.totalPrice.toFixed(2)}
+          price={this.props.price.toFixed(2)}
         />
       );
     }
@@ -177,7 +115,8 @@ class BurguerBuilder extends Component {
 
 const mapStateToProps = state => {
   return {
-    ings: state.ingredients
+    ings: state.ingredients,
+    price: state.totalPrice
   };
 };
 
