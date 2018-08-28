@@ -28,25 +28,11 @@ class BurguerBuilder extends Component {
   // Check if ingredients then return bool
   updatePuchaseState = ingredients =>
     Object.values(ingredients).find(e => e > 0);
-
   purchaseHandler = () => this.setState({ purchasing: true });
 
   purchaseCancelHandler = () => this.setState({ purchasing: false });
 
-  purchaseContinueHandler = () => {
-    const queryParams = [];
-    Object.entries(this.state.ingredients).map(igd =>
-      queryParams.push(
-        `${encodeURIComponent(igd[0])}=${encodeURIComponent(igd[1])}`
-      )
-    );
-    queryParams.push(`price=${this.props.price}`);
-    const queryString = queryParams.join('&');
-    this.props.history.push({
-      pathname: '/checkout',
-      search: '?' + queryString
-    });
-  };
+  purchaseContinueHandler = () => this.props.history.push('/checkout');
 
   render() {
     const disableInfo = {
