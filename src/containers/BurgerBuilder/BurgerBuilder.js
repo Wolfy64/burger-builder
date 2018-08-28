@@ -25,12 +25,12 @@ class BurguerBuilder extends Component {
   };
 
   componentDidMount() {
-    axios
-      .get('https://react-my-burger-70462.firebaseio.com/ingredients.json')
-      .then(response => this.setState({ ingredients: response.data }))
-      .catch(error => {
-        this.setState({ error: true });
-      });
+    // axios
+    //   .get('https://react-my-burger-70462.firebaseio.com/ingredients.json')
+    //   .then(response => this.setState({ ingredients: response.data }))
+    //   .catch(error => {
+    //     this.setState({ error: true });
+    //   });
   }
 
   updatePuchaseState = ingredients => {
