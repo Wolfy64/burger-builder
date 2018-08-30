@@ -5,25 +5,16 @@ import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
-import axios from '../../axios-orders';
 import Spinner from '../../components/UI/Spinner/Spinner';
+import axios from '../../axios-orders';
 import withErrorHandler from '../../components/withErrorHandler/withErrorHandler';
 
 class BurguerBuilder extends Component {
   state = {
-    purchasing: false,
-    loading: false,
-    error: false
+    purchasing: false
   };
 
-  componentDidMount() {
-    // axios
-    //   .get('https://react-my-burger-70462.firebaseio.com/ingredients.json')
-    //   .then(response => this.setState({ ingredients: response.data }))
-    //   .catch(error => {
-    //     this.setState({ error: true });
-    //   });
-  }
+  componentDidMount() {}
 
   // Check if ingredients then return bool
   updatePuchaseState = ingredients =>
@@ -74,8 +65,6 @@ class BurguerBuilder extends Component {
         />
       );
     }
-
-    if (this.state.loading) orderSummary = <Spinner />;
 
     return (
       <React.Fragment>
