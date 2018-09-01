@@ -28,7 +28,7 @@ export const purchasedBurger = orderData => {
       .then(
         response =>
           console.log(response.data) &&
-          dispatch(purchasedBurgerSuccess(response.data, orderData))
+          dispatch(purchasedBurgerSuccess(response.data.name, orderData))
       )
       .catch(error => dispatch(purchasedBurgerFail(error)));
   };
