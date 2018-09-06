@@ -19,9 +19,17 @@ class BurguerBuilder extends Component {
   }
 
   // Check if ingredients then return bool
-  updatePuchaseState = ingredients =>
-    Object.values(ingredients).find(e => e > 0);
-  purchaseHandler = () => this.setState({ purchasing: true });
+  updatePuchaseState = ingredients => {
+    return Object.values(ingredients).find(e => e > 0);
+  };
+
+  purchaseHandler = () => {
+    if (this.props.isAuthenticated) {
+      this.setState({ purchasing: true });
+    } else {
+      this.props.history.push('/auth');
+    }
+  };
 
   purchaseCancelHandler = () => this.setState({ purchasing: false });
 
@@ -57,6 +65,7 @@ class BurguerBuilder extends Component {
             purchasable={this.updatePuchaseState(this.props.ings)}
             ordered={this.purchaseHandler}
             price={this.props.price}
+            isAuth={this.props.isAuthenticated}
           />
         </React.Fragment>
       );
@@ -89,7 +98,8 @@ const mapStateToProps = state => {
   return {
     ings: state.burgerBuilder.ingredients,
     price: state.burgerBuilder.totalPrice,
-    error: state.burgerBuilder.error
+    error: state.burgerBuilder.error,
+    isAuthenticated: state.auth.token !== null
   };
 };
 
