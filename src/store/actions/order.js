@@ -44,7 +44,7 @@ export const fetchOrdersStart = () => {
   };
 };
 
-export const fetchOrdersSucess = orders => {
+export const fetchOrdersSuccess = orders => {
   return {
     type: actionTypes.FETCH_ORDERS_SUCCESS,
     orders: orders
@@ -58,11 +58,12 @@ export const fetchOrdersFail = error => {
   };
 };
 
-export const fetchOrders = token => {
+export const fetchOrders = (token, userId) => {
   return dispatch => {
     dispatch(fetchOrdersStart());
+    const queryParams = `?auth=${token}&orderBy="userId"&equalTo="${userId}"`;
     axios
-      .get(`/orders.json?auth=${token}`)
+      .get(`/orders.json${queryParams}`)
       .then(response => {
         const fetchedOrders = [];
         for (let key in response.data) {
@@ -71,7 +72,7 @@ export const fetchOrders = token => {
             id: key
           });
         }
-        dispatch(fetchOrdersSucess(fetchedOrders));
+        dispatch(fetchOrdersSuccess(fetchedOrders));
       })
       .catch(err => {
         dispatch(fetchOrdersFail(err));
