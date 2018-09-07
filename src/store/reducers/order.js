@@ -7,11 +7,11 @@ const initialState = {
   purchased: false
 };
 
-const purschasedInit = state => updateObject(state, { purchased: false });
+const purchasedInit = state => updateObject(state, { purchased: false });
 
 const purchaseBurgerStart = state => updateObject(state, { loading: true });
 
-const purchaseBurgerSucces = (state, action) => {
+const purchaseBurgerSuccess = (state, action) => {
   const newOrder = updateObject(action.orderData, { id: action.orderId });
   return updateObject(state, {
     loading: false,
@@ -37,11 +37,11 @@ const fetchOrdersFails = (state, action) =>
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.PURCHASE_INIT:
-      return purschasedInit(state);
+      return purchasedInit(state);
     case actionTypes.PURCHASE_BURGER_START:
       return purchaseBurgerStart(state);
     case actionTypes.PURCHASE_BURGER_SUCCESS:
-      return purchaseBurgerSucces(state, action);
+      return purchaseBurgerSuccess(state, action);
     case actionTypes.PURCHASE_BURGER_FAIL:
       return purchaseBurgerFail(state);
     case actionTypes.FETCH_ORDERS_START:
