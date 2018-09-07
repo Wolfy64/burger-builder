@@ -108,13 +108,14 @@ class ContactData extends Component {
     const order = {
       ingredients: this.props.ings,
       price: this.props.price,
-      orderData: formData
+      orderData: formData,
+      userId: this.props.userId
     };
     this.props.onOrderBurger(order, this.props.token);
   };
 
   checkValidity(value, rules) {
-    let isValid = true;
+    let isValid = true
 
     if (!rules) return true;
 
@@ -184,7 +185,8 @@ const mapStateToProps = state => {
     ings: state.burgerBuilder.ingredients,
     price: state.burgerBuilder.totalPrice,
     loading: state.order.loading,
-    token: state.auth.token
+    token: state.auth.token,
+    userId: state.auth.userId
   };
 };
 
