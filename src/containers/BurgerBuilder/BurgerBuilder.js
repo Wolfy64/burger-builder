@@ -19,9 +19,18 @@ class BurguerBuilder extends Component {
   }
 
   // Check if ingredients then return bool
-  updatePuchaseState = ingredients =>
-    Object.values(ingredients).find(e => e > 0);
-  purchaseHandler = () => this.setState({ purchasing: true });
+  updatePurchaseState = ingredients => {
+    return Object.values(ingredients).find(e => e > 0);
+  };
+
+  purchaseHandler = () => {
+    if (this.props.isAuthenticated) {
+      this.setState({ purchasing: true });
+    } else {
+      this.props.onSetAuthRedirectPath('/checkout');
+      this.props.history.push('/auth');
+    }
+  };
 
   purchaseCancelHandler = () => this.setState({ purchasing: false });
 
@@ -54,9 +63,10 @@ class BurguerBuilder extends Component {
             ingredientsAdded={this.props.onIngredientAdded}
             ingredientRemoved={this.props.onIngredientRemoved}
             disabled={disableInfo}
-            purchasable={this.updatePuchaseState(this.props.ings)}
+            purchasable={this.updatePurchaseState(this.props.ings)}
             ordered={this.purchaseHandler}
             price={this.props.price}
+            isAuth={this.props.isAuthenticated}
           />
         </React.Fragment>
       );
@@ -89,16 +99,18 @@ const mapStateToProps = state => {
   return {
     ings: state.burgerBuilder.ingredients,
     price: state.burgerBuilder.totalPrice,
-    error: state.burgerBuilder.error
+    error: state.burgerBuilder.error,
+    isAuthenticated: state.auth.token !== null
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onIngredientAdded: ingName => dispatch(actions.addIgredient(ingName)),
-    onIngredientRemoved: ingName => dispatch(actions.removeIgredient(ingName)),
+    onIngredientAdded: ingName => dispatch(actions.addIngredient(ingName)),
+    onIngredientRemoved: ingName => dispatch(actions.removeIngredient(ingName)),
     onInitIngredients: () => dispatch(actions.initIngredients()),
-    onInitPurchase: () => dispatch(actions.purchaseInit())
+    onInitPurchase: () => dispatch(actions.purchaseInit()),
+    onSetAuthRedirectPath: path => dispatch(actions.setAuthRedirectPath(path))
   };
 };
 
