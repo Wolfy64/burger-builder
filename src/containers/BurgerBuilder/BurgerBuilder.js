@@ -9,7 +9,7 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 import axios from '../../axios-orders';
 import withErrorHandler from '../../components/withErrorHandler/withErrorHandler';
 
-class BurguerBuilder extends Component {
+export class BurgerBuilder extends Component {
   state = {
     purchasing: false
   };
@@ -76,7 +76,7 @@ class BurguerBuilder extends Component {
           ingredients={this.props.ings}
           purchaseCancelled={this.purchaseCancelHandler}
           purchaseContinued={this.purchaseContinueHandler}
-          price={this.props.price.toFixed(2)}
+          price={this.props.price}
         />
       );
     }
@@ -117,4 +117,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withErrorHandler(BurguerBuilder, axios));
+)(withErrorHandler(BurgerBuilder, axios));
