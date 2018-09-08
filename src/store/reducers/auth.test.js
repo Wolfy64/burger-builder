@@ -7,7 +7,7 @@ describe('auth reducer', () => {
       token: null,
       userId: null,
       error: null,
-      loading: null,
+      loading: false,
       authRedirectPath: '/'
     });
   });
@@ -32,7 +32,7 @@ describe('auth reducer', () => {
       token: 'some token',
       userId: 'some user id',
       error: null,
-      loading: null,
+      loading: false,
       authRedirectPath: '/'
     });
   });
