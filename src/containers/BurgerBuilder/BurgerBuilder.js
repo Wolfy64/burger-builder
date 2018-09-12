@@ -76,7 +76,7 @@ export class BurgerBuilder extends Component {
           ingredients={this.props.ings}
           purchaseCancelled={this.purchaseCancelHandler}
           purchaseContinued={this.purchaseContinueHandler}
-          price={this.props.price}
+          price={this.props.price.toFixed(2)}
         />
       );
     }
